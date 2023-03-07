@@ -1,0 +1,61 @@
+<h1 class="mt-5">Selectores Anidados</h1>
+<hr />
+
+<form [formGroup]="selectorForm" (ngSubmit)="enviar()">
+
+  <!-- REGIONES -->
+  <div class="row">
+    <div class="col">
+      <label class="form-label">Continente</label>
+      <select class="form-control" formControlName="region">
+        <option value="">Seleccionar...</option>
+        <option *ngFor="let region of regiones" [value]="region | lowercase">{{ region }}</option>
+      </select>
+    </div>
+  </div>
+
+  <!-- PAISES -->
+  <div class="row mt-3" *ngIf="paises.length > 0">
+    <div class="col">
+      <label class="form-label">País</label>
+      <select class="form-control" formControlName="pais">
+        <option value="">Seleccionar...</option>
+        <option *ngFor="let pais of paises" [value]="pais.cca3">{{ pais.name.common }}</option>
+      </select>
+    </div>
+  </div>
+
+  <!-- FRONTERAS -->
+  <div class="row mt-3" *ngIf="fronteras?.length !== 0">
+    <div class="col">
+      <label class="form-label">Fronteras</label>
+      <select class="form-control" formControlName="frontera">
+        <option value="">Seleccionar...</option>
+        <option *ngFor="let frontera of fronteras" [value]="frontera.name.common">{{ frontera.name.common }}</option>
+      </select>
+    </div>
+  </div>
+
+  <!-- CARGANDO -->
+  <div class="row mt-3" *ngIf="cargando">
+    <div class="col">
+      <div class="alert alert-primary">Cargando</div>
+    </div>
+  </div>
+  
+  <div class="row mt-3">
+    <div class="col">
+        <button type="submit" class="btn btn-success float-end">Enviar</button>
+    </div>
+  </div>
+
+</form>
+
+<br /><br />
+<hr />
+<h3>Estado: {{ selectorForm.status }}</h3>
+<pre>Valido: {{ selectorForm.valid }} </pre>
+<pre>Errores: {{ selectorForm.errors | json }} </pre>
+<br />
+<h2>Valor</h2>
+<pre>{{ selectorForm.value | json }}</pre>
